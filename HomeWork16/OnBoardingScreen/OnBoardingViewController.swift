@@ -117,15 +117,20 @@ extension OnBoardingViewController: UICollectionViewDataSource, UICollectionView
     }
 
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = scrollView.frame.width
-        let page = Int(scrollView.contentOffset.x/width + 0.5)
-        pageControl.currentPage = page
-    }
 }
-extension OnBoardingViewController: UICollectionViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let pageIndex = Int(scrollView.contentOffset.x / scrollView.bounds.width)
-        pageControl.currentPage = pageIndex
+//extension OnBoardingViewController: UICollectionViewDelegate {
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let pageIndex = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+//        pageControl.currentPage = pageIndex
+// crollViewDelegate
+//    }
+//}
+extension OnBoardingViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageWidth = view.bounds.size.width
+        let targetOffsetX = targetContentOffset.pointee.x
+        let currentPage = Int(targetOffsetX/pageWidth)
+        pageControl.currentPage = currentPage
+        print("Current page = \(currentPage)")
     }
 }
